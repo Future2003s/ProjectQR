@@ -18,24 +18,24 @@ checkEnv()
 
 const configSchema = z.object({
   PORT: z.coerce.number().default(4000),
-  DATABASE_URL: z.string(),
-  ACCESS_TOKEN_SECRET: z.string(),
-  ACCESS_TOKEN_EXPIRES_IN: z.string(),
-  GUEST_ACCESS_TOKEN_EXPIRES_IN: z.string(),
-  GUEST_REFRESH_TOKEN_EXPIRES_IN: z.string(),
-  REFRESH_TOKEN_SECRET: z.string(),
-  REFRESH_TOKEN_EXPIRES_IN: z.string(),
-  INITIAL_EMAIL_OWNER: z.string(),
-  INITIAL_PASSWORD_OWNER: z.string(),
-  DOMAIN: z.string(),
-  PROTOCOL: z.string(),
-  UPLOAD_FOLDER: z.string(),
-  SERVER_TIMEZONE: z.string(),
-  GOOGLE_REDIRECT_CLIENT_URL: z.string(),
-  GOOGLE_CLIENT_ID: z.string(),
-  GOOGLE_CLIENT_SECRET: z.string(),
-  DOCKER: z.string(),
-  GOOGLE_AUTHORIZED_REDIRECT_URI: z.string()
+  DATABASE_URL: z.string().default('file:./dev.db'),
+  ACCESS_TOKEN_SECRET: z.string().default('_com_access'),
+  ACCESS_TOKEN_EXPIRES_IN: z.string().default('7d'),
+  GUEST_ACCESS_TOKEN_EXPIRES_IN: z.string().default('7d'),
+  GUEST_REFRESH_TOKEN_EXPIRES_IN: z.string().default('7d'),
+  REFRESH_TOKEN_SECRET: z.string().default('7d'),
+  REFRESH_TOKEN_EXPIRES_IN: z.string().default('7d'),
+  INITIAL_EMAIL_OWNER: z.string().default('sang@aa.com'),
+  INITIAL_PASSWORD_OWNER: z.string().default('123123'),
+  DOMAIN: z.string().default('localhost'),
+  PROTOCOL: z.string().default('http'),
+  UPLOAD_FOLDER: z.string().default('uploads'),
+  SERVER_TIMEZONE: z.string().default('Asia/Saigon'),
+  GOOGLE_REDIRECT_CLIENT_URL: z.string().default('http://localhost:3000/login/oauth'),
+  GOOGLE_CLIENT_ID: z.string().default('128916138255-bni80cbc32eulu5ek2515s12d75o53qa.apps.googleusercontent.com'),
+  GOOGLE_CLIENT_SECRET: z.string().default('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'),
+  DOCKER: z.string().default('DOCKER'),
+  GOOGLE_AUTHORIZED_REDIRECT_URI: z.string().default('http://localhost:4000/auth/login/google')
 })
 
 const configServer = configSchema.safeParse(process.env)
