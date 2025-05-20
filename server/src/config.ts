@@ -30,9 +30,11 @@ const configSchema = z.object({
   DOMAIN: z.string(),
   PROTOCOL: z.string(),
   UPLOAD_FOLDER: z.string(),
+  SERVER_TIMEZONE: z.string(),
   GOOGLE_REDIRECT_CLIENT_URL: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  DOCKER: z.string(),
   GOOGLE_AUTHORIZED_REDIRECT_URI: z.string()
 })
 

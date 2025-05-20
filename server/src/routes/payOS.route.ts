@@ -128,6 +128,47 @@ async function payosRoutes(fastify: FastifyInstance, options: any) {
     }
   )
 
+  interface IDataHook {
+    guest: {
+      id: number
+      name: string
+      tableNumber: number | null
+      refreshToken: string | null
+      refreshTokenExpiresAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    } | null
+    dishSnapshot: {
+      id: number
+      name: string
+      price: number
+      description: string
+      image: string
+      status: string
+      dishId: number | null
+      updatedAt: Date
+      createdAt: Date
+    }
+  }
+
+  interface IDataHook_1 {
+    id: number
+    guestId: number | null
+    tableNumber: number | null
+    dishSnapshotId: number
+    quantity: number | any
+    orderHandlerId: number | null
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    totalPrice: any
+    tableId: any
+    dishId: any
+    price: any
+  }
+
+  type Result = IDataHook & IDataHook_1
+
   // **ROUTE XỬ LÝ WEBHOOK TỪ PAYOS**
   // URL này bạn đã đăng ký với PayOS: https://ba91-171-225-205-34.ngrok-free.app/receive-hook
   fastify.post('/receive-hook', async (request: FastifyRequest<{ Body: PayOSWebhookPayload }>, reply: FastifyReply) => {
@@ -150,9 +191,7 @@ async function payosRoutes(fastify: FastifyInstance, options: any) {
       // Bước 2: Xác thực dữ liệu webhook
       // Truyền object `webhookPayload.data` (chứa cả signature và object `data` con) vào hàm xác thực.
       // Hàm verifyPaymentWebhookData sẽ trả về nội dung của `webhookPayload.data.data` nếu thành công.
-      const verifiedTransactionDetails: PayOSTransactionDetailsFromWebhook = payOS.verifyPaymentWebhookData(
-        webhookPayload.data
-      )
+      const verifiedTransactionDetails = payOS.verifyPaymentWebhookData(webhookPayload.data as any)
 
       console.log('verifiedTransactionDetails', verifiedTransactionDetails)
 
@@ -189,7 +228,7 @@ async function payosRoutes(fastify: FastifyInstance, options: any) {
           fastify.log.info(`[PayOS Webhook] Order ID ${systemOrderCode} đã ở trạng thái PAID. Bỏ qua cập nhật DB.`)
         } else {
           // Cập nhật Order thành PAID
-          const updatedOrder = await prisma.order.update({
+          const updatedOrder = (await prisma.order.update({
             where: { id: systemOrderCode },
             data: {
               status: OrderStatus.Paid
@@ -198,7 +237,7 @@ async function payosRoutes(fastify: FastifyInstance, options: any) {
               guest: true,
               dishSnapshot: true
             }
-          })
+          })) as Result
 
           if (updatedOrder) {
             fastify.log.info(`[PayOS Webhook] Đã cập nhật thành công Order ID ${systemOrderCode} thành PAID trong DB.`)
