@@ -1,6 +1,6 @@
 # Parallel Route
 
-Tạo name folder với `@` phía trước thì ta gọi folder đó là slot: `@settings`, `@modal`,...
+Tạo name folder với `@` phía trước thì gọi folder đó là slot: `@settings`, `@modal`,...
 
 Slot thì không tạo ra route segment, khá giống với route group (`()`)
 
@@ -35,12 +35,12 @@ Vì 2 slot dùng chung 1 cái tên nên nên 1 lúc chỉ có 1 slot được hi
 
 Và bạn sẽ có 1 route segment mới là `/setting`
 
-Bây giờ mình sẽ làm một số bài test:
+Bây giờ có một số bài test:
 
-1. Khi bạn **enter** vào `/` thì bạn sẽ bị 404. Lý do là bởi vì slot `modal` 1 sẽ kích hoạt do trùng url nhưng chúng ta chưa tạo file `page.tsx` trong slot này.
+1. Khi **enter** vào `/` thì sẽ bị 404. Lý do là bởi vì slot `modal` 1 sẽ kích hoạt do trùng url nhưng chưa tạo file `page.tsx` trong slot này.
 
-2. Khi bạn từ trang chủ **click** vào `/setting` thì slot `modal` 2 sẽ được active, cùng với đó là slot `children` ẩn được active.
+2. Khi từ trang chủ **click** vào `/setting` thì slot `modal` 2 sẽ được active, cùng với đó là slot `children` ẩn được active.
 
-Nhưng bạn F5 page `/setting` thì bạn sẽ bị 404. Vì lúc này slot `chidren` không active nữa, Next.js sẽ tìm đến `default.tsx` của slot children nhưng chúng ta chưa tạo thì sẽ bị 404.
+Nhưng F5 page `/setting` thì bạn sẽ bị 404. Vì lúc này slot `chidren` không active nữa, Next.js sẽ tìm đến `default.tsx` của slot children nhưng chưa tạo thì sẽ bị 404.
 
-> Bạn chỉ cần quan tâm slot ẩn `children` khi bạn đang ở url `/setting` thôi, còn lại url khác thì không cần quan tâm.
+> Cần quan tâm slot ẩn `children` khi bạn đang ở url `/setting`,
